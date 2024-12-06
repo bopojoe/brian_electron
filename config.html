@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configure Button</title>
+</head>
+<body>
+    <h1>Configure Button</h1>
+
+    <label>
+        <input type="radio" name="type" value="text" checked>
+        Text
+    </label>
+    <label>
+        <input type="radio" name="type" value="image">
+        Image
+    </label>
+
+    <div id="text-config">
+        <label for="text">Text:</label>
+        <input type="text" id="text" placeholder="Enter text">
+    </div>
+
+    <div id="image-config" style="display: none;">
+        <label for="image-url">Image URL:</label>
+        <input type="text" id="image-url" placeholder="Enter image URL">
+    
+        <label for="alt-text">Alt Text:</label>
+        <input type="text" id="alt-text" placeholder="Enter alt text">
+    </div>
+
+    <button id="save-button">Save</button>
+    <button id="cancel-button">Cancel</button>
+
+    <script>
+        const typeRadios = document.querySelectorAll('input[name="type"]');
+        const textConfig = document.getElementById('text-config');
+        const imageConfig = document.getElementById('image-config');
+
+        typeRadios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                if (radio.value === 'text') {
+                    textConfig.style.display = 'block';
+                    imageConfig.style.display = 'none';
+                } else if (radio.value === 'image') {
+                    textConfig.style.display = 'block';
+                    imageConfig.style.display = 'block';
+                }
+            });
+        });
+
+        document.getElementById('save-button').addEventListener('click', async () => {
+    const type = document.querySelector('input[name="type"]:checked').value;
+    const text = document.getElementById('text').value;
+    const imageUrl = document.getElementById('image-url').value;
+    const altText = document.getElementById('alt-text').value;
+
+    const payload = {
+        blocks: [
+            {
+                type: "section",
+                text: { type: "mrkdwn", text },
+            },
+        ],
+    };
+
+    if (type === 'image') {
+        payload.blocks.push({
+            type: "image",
+            image_url: imageUrl,
+            alt_text: altText || "Image", // Fallback to "Image" if no alt text is provided
+        });
+    }
+
+    await window.electronAPI.saveNewButton({
+        label: text,
+        payload,
+    });
+});
+
+
+        document.getElementById('cancel-button').addEventListener('click', () => {
+            window.close();
+        });
+    </script>
+</body>
+</html>

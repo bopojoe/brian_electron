@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nurse Brian</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="webhook-management">
+        <h2>Manage Webhooks</h2>
+        <div id="webhook-list"></div> <!-- Webhook list with radio buttons -->
+        <input type="text" id="webhook-name" placeholder="Webhook Name">
+        <input type="text" id="webhook-url" placeholder="Webhook URL">
+        <button id="add-webhook">Add Webhook</button>
+    </div>
+
+    <div id="button-management">
+        <h2>Buttons</h2>
+        <div id="button-container"></div>
+        <button id="add-button">Add New Button</button>
+    </div>
+    
+
+    <div id="custom-message">
+        <h2>Custom Message</h2>
+        <textarea id="message-box" placeholder="Enter custom message"></textarea>
+        <button id="send-message">Send</button>
+    </div>
+
+    <script src="renderer.js"></script>
+</body>
+</html>
